@@ -6,25 +6,26 @@ BATHROOM = 27
 CLOSET = 22
 
 GPIO.setmode(GPIO.BCM)
+
 GPIO.setup(LIVING_ROOM, GPIO.OUT)
 GPIO.setup(BATHROOM, GPIO.OUT)
 GPIO.setup(CLOSET, GPIO.OUT)
 
 def turn_off_all():
-    GPIO.output(LIVING_ROOM, GPIO.LOW)
-    GPIO.output(BATHROOM, GPIO.LOW)
-    GPIO.output(CLOSET, GPIO.LOW)
+　GPIO.output(LIVING_ROOM, GPIO.LOW)
+　GPIO.output(BATHROOM, GPIO.LOW)
+　GPIO.output(CLOSET, GPIO.LOW)
 
 def turn_on_led():
-    turn_off_all()
-    selected_pin = led_choice.get()
-    if selected_pin != 0:
-        GPIO.output(selected_pin, GPIO.HIGH)
+　turn_off_all()
+　selected_pin = led_choice.get()
+　if selected_pin != 0:
+　　GPIO.output(selected_pin, GPIO.HIGH)
 
 def close_app():
-    turn_off_all()
-    GPIO.cleanup()
-    root.destroy()
+　turn_off_all()
+　GPIO.cleanup()
+　root.destroy()
 
 
 # ===== GUI =====
