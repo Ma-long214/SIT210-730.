@@ -1,1 +1,49 @@
+import RPi.GPIO as GPIO
+import tkinter as tk
 
+LIVING_ROOM = 17
+BATHROOM = 27
+CLOSET = 22
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(LIVING_ROOM, GPIO.OUT)
+GPIO.setup(BATHROOM, GPIO.OUT)
+GPIO.setup(CLOSET, GPIO.OUT)
+
+def turn_off_all():
+    GPIO.output(LIVING_ROOM, GPIO.LOW)
+    GPIO.output(BATHROOM, GPIO.LOW)
+    GPIO.output(CLOSET, GPIO.LOW)
+
+def turn_on_led():
+    turn_off_all()
+    selected_pin = led_choice.get()
+    if selected_pin != 0:
+        GPIO.output(selected_pin, GPIO.HIGH)
+
+def close_app():
+    turn_off_all()
+    GPIO.cleanup()
+    root.destroy()
+
+
+# ===== GUI =====
+
+root = tk.Tk()
+root.title("Smart Light Control")
+root.geometry("300x200")
+
+led_choice = tk.IntVar()
+led_choice.set(0)
+
+tk.Label(root, text="Choose the room you want to light up.", font=("Arial", 12)).pack(pady=10)
+
+tk.Radiobutton(root, text="Living Room", variable=led_choice, value=LIVING_ROOM, command=turn_on_led, font=("Arial", 12)).pack(anchor=tk.W, padx=50)
+tk.Radiobutton(root, text="Bathroom", variable=led_choice, value=BATHROOM, command=turn_on_led, font=("Arial", 12)).pack(anchor=tk.W, padx=50)
+tk.Radiobutton(root, text="Closet", variable=led_choice, value=CLOSET, command=turn_on_led, font=("Arial", 12)).pack(anchor=tk.W, padx=50)
+
+tk.Button(root, text="Exit", command=close_app, bg="red", fg="white", font=("Arial", 12)).pack(pady=20)
+
+root.protocol("WM_DELETE_WINDOW", close_app)
+
+root.mainloop()
