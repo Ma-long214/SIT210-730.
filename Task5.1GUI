@@ -13,9 +13,9 @@ GPIO.setup(CLOSET, GPIO.OUT)
 
 def update_living():
 　if living_state.get() == 1:
-　　GPIO.output(LIVING_ROOM, GPIO.HIGH) #The light turns on when 1 (ON) is selected.
+　　GPIO.output(LIVING_ROOM, GPIO.HIGH) # Turns on the light when 1 (ON) is selected.
 　else:
-　　GPIO.output(LIVING_ROOM, GPIO.LOW)
+　　GPIO.output(LIVING_ROOM, GPIO.LOW) # Turns off the light otherwise (0/OFF).
 
 def update_bathroom():
 　if bathroom_state.get() == 1:
