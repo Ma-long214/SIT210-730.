@@ -45,7 +45,7 @@ def close_app():
 
 root = tk.Tk()
 root.title("Smart Light Control")
-root.geometry("300x200")
+root.geometry("300x500")
 
 living_state = tk.IntVar()
 living_state.set(0)
