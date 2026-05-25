@@ -11,16 +11,29 @@ GPIO.setup(LIVING_ROOM, GPIO.OUT)
 GPIO.setup(BATHROOM, GPIO.OUT)
 GPIO.setup(CLOSET, GPIO.OUT)
 
+def update_living():
+　if living_state.get() == 1:
+　　GPIO.output(LIVING_ROOM, GPIO.HIGH) #The light turns on when 1 (ON) is selected.
+　else:
+　　GPIO.output(LIVING_ROOM, GPIO.LOW)
+
+def update_bathroom():
+　if bathroom_state.get() == 1:
+　　GPIO.output(BATHROOM, GPIO.HIGH)
+　else:
+　　GPIO.output(BATHROOM, GPIO.LOW)
+
+def update_closet():
+　if closet_state.get() == 1:
+　　GPIO.output(CLOSET, GPIO.HIGH)
+　else:
+　　GPIO.output(CLOSET, GPIO.LOW)
+
+
 def turn_off_all():
 　GPIO.output(LIVING_ROOM, GPIO.LOW)
 　GPIO.output(BATHROOM, GPIO.LOW)
 　GPIO.output(CLOSET, GPIO.LOW)
-
-def turn_on_led():
-　turn_off_all()
-　selected_pin = led_choice.get()
-　if selected_pin != 0:
-　　GPIO.output(selected_pin, GPIO.HIGH)
 
 def close_app():
 　turn_off_all()
@@ -34,14 +47,30 @@ root = tk.Tk()
 root.title("Smart Light Control")
 root.geometry("300x200")
 
-led_choice = tk.IntVar()
-led_choice.set(0)
+living_state = tk.IntVar()
+living_state.set(0)
+bathroom_state = tk.IntVar()
+bathroom_state.set(0)
+closet_state = tk.IntVar()
+closet_state.set(0)
 
-tk.Label(root, text="Choose the room you want to light up.", font=("Arial", 12)).pack(pady=10)
+tk.Label(root, text="Control each room’s lights.", font=("Arial", 12)).pack(pady=10)
 
-tk.Radiobutton(root, text="Living Room", variable=led_choice, value=LIVING_ROOM, command=turn_on_led, font=("Arial", 12)).pack(anchor=tk.W, padx=50)
-tk.Radiobutton(root, text="Bathroom", variable=led_choice, value=BATHROOM, command=turn_on_led, font=("Arial", 12)).pack(anchor=tk.W, padx=50)
-tk.Radiobutton(root, text="Closet", variable=led_choice, value=CLOSET, command=turn_on_led, font=("Arial", 12)).pack(anchor=tk.W, padx=50)
+# ======== Living Room ========
+tk.Label(root, text="Living Room", font=("Arial", 12)).pack(pady=10)
+tk.Radiobutton(root, text="ON", variable=living_state, value=1, command=update_living, font=("Arial", 12)).pack(anchor=tk.W, padx=50)
+tk.Radiobutton(root, text="OFF", variable=living_state, value=0, command=update_living, font=("Arial", 12)).pack(anchor=tk.W, padx=50)
+
+# ======== Bathroom ========
+tk.Label(root, text="Bathroom", font=("Arial", 12)).pack(pady=10)
+tk.Radiobutton(root, text="ON", variable=bathroom_state, value=1, command=update_bathroom, font=("Arial", 12)).pack(anchor=tk.W, padx=50)
+tk.Radiobutton(root, text="OFF", variable=bathroom_state, value=0, command=update_bathroom, font=("Arial", 12)).pack(anchor=tk.W, padx=50)
+
+# ======== Closet ========
+tk.Label(root, text="Closet", font=("Arial", 12)).pack(pady=10)
+tk.Radiobutton(root, text="ON", variable=closet_state, value=1, command=update_closet, font=("Arial", 12)).pack(anchor=tk.W, padx=50)
+tk.Radiobutton(root, text="OFF", variable=closet_state, value=0, command=update_closet, font=("Arial", 12)).pack(anchor=tk.W, padx=50)
+
 
 tk.Button(root, text="Exit", command=close_app, bg="red", fg="white", font=("Arial", 12)).pack(pady=20)
 
